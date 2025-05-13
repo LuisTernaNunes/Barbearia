@@ -27,9 +27,10 @@ public class Barbeiro {
 
     public Barbeiro(@Valid DadosCadBarbeiro dadosBarbeiro) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        nomeBarbeiro = dadosBarbeiro.nome();
-        telefone = dadosBarbeiro.telefone();
-        senha = encoder.encode(dadosBarbeiro.senha());
-        ativo = true;
+        this.nomeBarbeiro = dadosBarbeiro.nome();
+        this.telefone = dadosBarbeiro.telefone();
+        this.senha = encoder.encode(dadosBarbeiro.senha());
+        this.ativo = true;
+        this.email = dadosBarbeiro.email();
     }
 }

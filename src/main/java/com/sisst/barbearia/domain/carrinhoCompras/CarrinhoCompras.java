@@ -18,7 +18,7 @@ public class CarrinhoCompras {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @ManyToOne
     private Produto produto;
     @OneToOne(optional = false)
     @JoinColumn(name = "idAgendamento", nullable = false, unique = true)
