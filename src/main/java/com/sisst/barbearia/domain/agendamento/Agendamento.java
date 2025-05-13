@@ -20,12 +20,13 @@ public class Agendamento {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idAgendamento;
     @OneToOne
-    private Cliente nomeCliente;
+    private Cliente cliente;
     private LocalDateTime horario;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_barbeiro")
     private Barbeiro barbeiro;
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "produto_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "produto_id", nullable = false)
     private Produto produto;
     private Boolean ativo;
     @OneToOne(mappedBy = "agendamento", cascade = CascadeType.ALL, orphanRemoval = true)

@@ -15,8 +15,8 @@ import lombok.*;
 public class Produto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idProduto;
-    private String nomePorduto;
+    private Long produtoId;
+    private String nomeProduto;
     private Double valorVenda;
     private Double valorCusto;
     private String enderecoImagem;

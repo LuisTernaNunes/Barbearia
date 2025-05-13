@@ -22,6 +22,8 @@ public class Barbeiro {
     private String telefone;
     private Boolean ativo;
     private String senha;
+    private String foto;
+    private String email;
 
     public Barbeiro(@Valid DadosCadBarbeiro dadosBarbeiro) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
