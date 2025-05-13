@@ -2,6 +2,7 @@ package com.sisst.barbearia.domain.produto;
 
 import com.sisst.barbearia.domain.agendamento.Agendamento;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import lombok.*;
 
 @ToString
@@ -20,5 +21,13 @@ public class Produto {
     private Double valorCusto;
     private String enderecoImagem;
     private Boolean ativo;
-    private Long online;
+    private Boolean online;
+
+    public Produto(@Valid DadosCadProduto dados) {
+        this.nomeProduto = dados.nomeProduto();
+        this.valorVenda = dados.valorVenda();
+        this.valorCusto = dados.valorCusto();
+        this.ativo = true;
+        this.online = dados.online();
+    }
 }
