@@ -1,14 +1,11 @@
 package com.sisst.barbearia.domain.carrinhoCompras;
 
 import com.sisst.barbearia.domain.agendamento.Agendamento;
-import com.sisst.barbearia.domain.enums.Pagamento;
-import com.sisst.barbearia.domain.enums.Status;
+import com.sisst.barbearia.domain.pagamento.Pagamento;
 import com.sisst.barbearia.domain.itemProduto.ItemProduto;
-import com.sisst.barbearia.domain.produto.Produto;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -42,5 +39,10 @@ public class CarrinhoCompras {
         this.status = Status.ABERTO;
         this.valorTotal = agendamento.getProduto().getValorVenda();
         this.pagamento= Pagamento.NAOPAGO;
+    }
+
+    public void addProdutos(ItemProduto itens) {
+        produtos.add(itens);
+        this.valorTotal = this.valorTotal + itens.getValorUnitario() * itens.getQuantidade();
     }
 }

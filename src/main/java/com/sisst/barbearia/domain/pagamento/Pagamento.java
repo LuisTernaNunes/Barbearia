@@ -1,4 +1,4 @@
-package com.sisst.barbearia.domain.enums;
+package com.sisst.barbearia.domain.pagamento;
 
 public enum Pagamento {
     Debito,

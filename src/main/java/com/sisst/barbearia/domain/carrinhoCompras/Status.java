@@ -1,4 +1,4 @@
-package com.sisst.barbearia.domain.enums;
+package com.sisst.barbearia.domain.carrinhoCompras;
 
 public enum Status {
     ABERTO,
