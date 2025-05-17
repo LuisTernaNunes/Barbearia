@@ -6,7 +6,7 @@ CREATE TABLE produto (
     valor_custo DOUBLE NOT NULL,
     endereco_imagem VARCHAR(255),
     ativo BOOLEAN NOT NULL,
-    online BIGINT
+    online BOOLEAN NOT NULL
 );
 
 -- Criação da tabela Barbeiro
@@ -43,11 +43,22 @@ CREATE TABLE agendamento (
 
 -- Criação da tabela CarrinhoCompras
 CREATE TABLE carrinho_compras (
-    id_carrinho BIGINT AUTO_INCREMENT PRIMARY KEY,
-    id_agendamento BIGINT NOT NULL,
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    id_agendamento BIGINT NOT NULL UNIQUE,
+    valor_total DECIMAL(10,2),
+    abertura TIMESTAMP,
+    status VARCHAR(10) NOT NULL,
+    pagamento VARCHAR(10) NOT NULL,
+    CONSTRAINT fk_agendamento FOREIGN KEY (id_agendamento) REFERENCES agendamento(id_agendamento)
+);
+
+-- Criação da tabela ItemCarrinho
+CREATE TABLE item_carrinho (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
     id_produto BIGINT NOT NULL,
     quantidade INT NOT NULL,
-    valor DOUBLE NOT NULL,
-    CONSTRAINT fk_agendamento FOREIGN KEY (id_agendamento) REFERENCES agendamento(id_agendamento),
-    CONSTRAINT fk_produto_carrinho FOREIGN KEY (id_produto) REFERENCES produto(produto_id)
+    valor_unitario DECIMAL(10,2) NOT NULL,
+    id_carrinho BIGINT NOT NULL,
+    CONSTRAINT fk_produtos FOREIGN KEY (id_produto) REFERENCES produto(produto_id),
+    CONSTRAINT fk_carrinho FOREIGN KEY (id_carrinho) REFERENCES carrinho_compras(id)
 );
