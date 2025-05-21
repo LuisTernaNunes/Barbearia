@@ -9,6 +9,8 @@ import com.sisst.barbearia.domain.agendamento.service.AgendamentoService;
 import com.sisst.barbearia.domain.barbeiro.DadosBarbeiro;
 import com.sisst.barbearia.domain.carrinhoCompras.CarrinhoCompras;
 import com.sisst.barbearia.domain.carrinhoCompras.CarrinhoRepository;
+import com.sisst.barbearia.domain.carrinhoCompras.ExibeCarrinho;
+import com.sisst.barbearia.domain.carrinhoCompras.Status;
 import com.sisst.barbearia.domain.cliente.Cliente;
 import com.sisst.barbearia.domain.cliente.ClienteService;
 import com.sisst.barbearia.domain.cliente.DadosAgendamentoCliente;
@@ -17,12 +19,18 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+
 @Controller
-@RequestMapping("/agendamento")
+@RequestMapping("/agendamentos")
 public class AgendamentoController {
     @Autowired
     AgendamentoService agendamentoService;
@@ -44,6 +52,15 @@ public class AgendamentoController {
         agendamentoRepository.save(agendamento);
         carrinhoRepository.save(carrinho);
         return ResponseEntity.ok(new ExibeDadosAgendamento(agendamento));
+    }
+    @GetMapping
+    public String carregaAgendamento(Model model){
+
+        List<ExibeCarrinho> carrinho = carrinhoRepository.buscarResumoCarrinhos();
+        carrinho.forEach(System.out::println);
+        model.addAttribute("carrinho", carrinho);
+        return "agendamentos";
+
     }
 }
 

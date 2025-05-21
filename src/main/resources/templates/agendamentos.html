@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Agendamentos</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+  <div th:replace="fragments/sidebar :: sidebar"></div>
+  <div class="ml-64">
+    <div th:replace="fragments/header :: header"></div>
+    <main class="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div th:each="carrinho, iterStat : ${carrinho}">
+        <!-- Botão que abre o popup -->
+        <button type="button"
+                th:attr="onclick=|openModal(${iterStat.index})|"
+                class="w-full text-left bg-white shadow rounded-xl p-4 border cursor-pointer hover:bg-gray-100 transition">
+          <h3 class="text-lg font-bold" th:text="${carrinho.nome}">João</h3>
+          <p class="text-sm mt-1" th:text="${#temporals.format(carrinho.horario, 'HH:mm')}">15:00</p>
+          <p class="text-sm text-gray-600 mt-2" th:text="'Valor: R$ ' + ${carrinho.valor}">R$ 50,00</p>
+        </button>
+        <div th:replace="fragments/modal :: modal(${carrinho}, ${iterStat.index})"></div>
+      </div>
+    </main>
+  </div>
+  <script src="/js/modal.js"></script>
+</body>
+</html>
