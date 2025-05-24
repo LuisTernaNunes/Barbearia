@@ -9,14 +9,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AgendamentoService {
-    @Autowired
-    ProdutoRepository repositoryProduto;
-    @Autowired
-    RepositoryBarbeiro repositoryBarbeiro;
-    public Produto buscaProduto(Long idProduto){
-         return repositoryProduto.getReferenceById(idProduto);
-    }
-    public Barbeiro buscaBarbeiro(Long idbarbeiro){
-        return repositoryBarbeiro.getReferenceById(idbarbeiro);
-    }
+
+
 }

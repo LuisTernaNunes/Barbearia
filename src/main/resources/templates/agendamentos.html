@@ -18,6 +18,7 @@
           <h3 class="text-lg font-bold" th:text="${carrinho.nome}">João</h3>
           <p class="text-sm mt-1" th:text="${#temporals.format(carrinho.horario, 'HH:mm')}">15:00</p>
           <p class="text-sm text-gray-600 mt-2" th:text="'Valor: R$ ' + ${carrinho.valor}">R$ 50,00</p>
+          <p class="text-sm text-gray-600 mt-2" th:text="'Barbeiro: ' + ${carrinho.nomeBarbeiro}">Lucas</p>
         </button>
         <div th:replace="fragments/modal :: modal(${carrinho}, ${iterStat.index})"></div>
       </div>
