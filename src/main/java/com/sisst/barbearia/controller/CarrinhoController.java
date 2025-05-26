@@ -1,7 +1,8 @@
-package com.sisst.barbearia.domain.carrinhoCompras;
+package com.sisst.barbearia.controller;
 
+import com.sisst.barbearia.domain.carrinhoCompras.CarrinhoRepository;
+import com.sisst.barbearia.domain.carrinhoCompras.DadosAddProduto;
 import com.sisst.barbearia.domain.itemProduto.ItemProduto;
-import com.sisst.barbearia.domain.produto.DadosProduto;
 import com.sisst.barbearia.domain.produto.ProdutoRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

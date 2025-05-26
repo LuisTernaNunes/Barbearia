@@ -1,18 +1,53 @@
+
 <!-- fragments/modal.html -->
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<body>
-<div th:fragment="modal(carrinho, index)"
-     th:attr="id='modal-' + ${index}"
-     class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+<div th:fragment="modal(carrinho,index)"
+     x-show="modal"
+     x-transition
+     style="display: none;"
+     class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
 
-    <div class="bg-white p-6 rounded-lg shadow-xl max-w-sm w-full relative">
-        <button onclick="closeAllModals()" class="absolute top-2 right-2 text-gray-500 hover:text-black">✖</button>
-        <h2 class="text-xl font-bold mb-2" th:text="'Cliente: ' + ${carrinho.nome}">Cliente: João</h2>
-        <p th:text="'Horário: ' + ${#temporals.format(carrinho.horario, 'HH:mm')}">Horário: 15:00</p>
-        <p th:text="'Valor: R$ ' + ${carrinho.valor}">Valor: R$ 50,00</p>
+
+
+    <div class="bg-gray-900 text-white rounded-2xl shadow-lg p-6 w-full max-w-md space-y-4">
+
+        <!-- Nome do Cliente -->
+        <h2 class="text-center text-2xl font-bold uppercase" th:text="${carrinho.exibeCarrinho.nome}">João Silva</h2>
+
+        <!-- Serviços do carrinho -->
+        <div class="grid grid-cols-2 gap-4">
+            <div th:each="carrinho : ${carrinho}"
+                 class="border border-gray-300 bg-white text-gray-900 rounded-xl p-4 flex flex-col items-center justify-center text-center space-y-2 shadow-sm hover:shadow-md transition">
+                <span class="text-3xl">🧔‍♂️</span>
+                <span th:text="${carrinho.exibeCarrinho.nomeProduto}">Barba</span>
+                <span th:text="'R$ ' + ${carrinho.exibeCarrinho.valorVenda}">R$ 20,00</span>
+            </div>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+            <div th:each="itens : ${carrinho.itensCarrinho}"
+                 class="border border-gray-300 bg-white text-gray-900 rounded-xl p-4 flex flex-col items-center justify-center text-center space-y-2 shadow-sm hover:shadow-md transition">
+                <span class="text-3xl">🧔‍♂️</span>
+                <span th:text="${itens.nomeProduto}">Barba</span>
+                <span th:text="'R$: ' + ${itens.valorVenda}">R$ 20,00</span>
+                <span th:text="'QTD :' + ${itens.quantidade}">QTD : 2</span>
+            </div>
+        </div>
+
+        <!-- Rodapé com total e botão -->
+        <div class="flex flex-wrap justify-between items-center gap-2 mt-4">
+            <button @click="modal = false" class="bg-white text-gray-900 font-semibold py-1 px-3 rounded hover:bg-gray-100 transition">
+                Fechar &times;
+            </button>
+            <button class="bg-white text-gray-900 font-semibold py-1 px-3 rounded hover:bg-gray-100 transition">
+                Pagamento 💳
+            </button>
+            <button class="bg-white text-gray-900 font-semibold py-1 px-3 rounded hover:bg-gray-100 transition">
+                Produtos 📦
+            </button>
+            <p class="text-lg font-medium ml-auto"
+               th:text="'Total: R$ ' + ${carrinho.exibeCarrinho.valorTotal}">
+                Total: R$115,00
+            </p>
+        </div>
+
     </div>
-
 </div>
-</body>
-</html>

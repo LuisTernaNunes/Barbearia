@@ -4,23 +4,55 @@
   <meta charset="UTF-8">
   <title>Agendamentos</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 </head>
 <body>
   <div th:replace="fragments/sidebar :: sidebar"></div>
   <div class="ml-64">
     <div th:replace="fragments/header :: header"></div>
     <main class="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      <div th:each="carrinho, iterStat : ${carrinho}">
+      <div th:each="carrinho, iterStat : ${carrinho}" x-data="{ modal: false }">
         <!-- Botão que abre o popup -->
         <button type="button"
-                th:attr="onclick=|openModal(${iterStat.index})|"
-                class="w-full text-left bg-white shadow rounded-xl p-4 border cursor-pointer hover:bg-gray-100 transition">
-          <h3 class="text-lg font-bold" th:text="${carrinho.nome}">João</h3>
-          <p class="text-sm mt-1" th:text="${#temporals.format(carrinho.horario, 'HH:mm')}">15:00</p>
-          <p class="text-sm text-gray-600 mt-2" th:text="'Valor: R$ ' + ${carrinho.valor}">R$ 50,00</p>
-          <p class="text-sm text-gray-600 mt-2" th:text="'Barbeiro: ' + ${carrinho.nomeBarbeiro}">Lucas</p>
+                @click="modal = true"
+                class="w-full max-w-xs mx-auto bg-gradient-to-br from-white to-gray-100 shadow-lg rounded-2xl p-6 cursor-pointer hover:scale-[1.01] transition-all">
+
+          <!-- Nome do cliente em destaque -->
+          <h3 class="text-2xl font-semibold text-gray-800 text-center mb-4"
+              th:text="${carrinho.exibeCarrinho.nome}">Carlos Silva</h3>
+
+          <!-- Hora -->
+          <div class="flex items-center justify-start gap-2 text-gray-700 text-sm mb-1">
+            <span class="text-lg">🕒</span>
+            <span th:text="${#temporals.format(carrinho.exibeCarrinho.horario, 'dd/MM/yyyy - HH:mm')}">
+            24/05/2025 - 14:30
+        </span>
+          </div>
+
+          <!-- Barbeiro -->
+          <div class="flex items-center justify-start gap-2 text-gray-700 text-sm mb-1">
+            <span class="text-lg">✂️</span>
+            <span th:text="${carrinho.exibeCarrinho.nomeBarbeiro}">João</span>
+          </div>
+
+          <div class="flex items-center justify-start gap-2 text-gray-700 text-sm mb-1">
+            <span class="text-lg">✂️</span>
+            <span th:text="${carrinho.exibeCarrinho.nomeProduto}">Corte Básico</span>
+          </div>
+
+
+          <!-- Divider -->
+          <hr class="my-3 border-gray-300">
+
+          <!-- Valor -->
+          <div class="flex items-center justify-start gap-2 text-gray-800 font-medium text-sm">
+            <span class="text-lg">💰</span>
+            <span th:text="'R$ ' + ${carrinho.exibeCarrinho.valorTotal}">
+            R$ 10,00
+        </span>
+          </div>
         </button>
-        <div th:replace="fragments/modal :: modal(${carrinho}, ${iterStat.index})"></div>
+        <div th:replace="fragments/modal :: modal(carrinho=${carrinho}, index=${iterStat.index})"></div>
       </div>
     </main>
   </div>

@@ -8,20 +8,16 @@ import com.sisst.barbearia.domain.agendamento.service.AgendamentoRepository;
 import com.sisst.barbearia.domain.agendamento.service.AgendamentoService;
 import com.sisst.barbearia.domain.agendamento.validacoes.ValidadorAgendamento;
 import com.sisst.barbearia.domain.barbeiro.service.BuscaBarbeiro;
-import com.sisst.barbearia.domain.carrinhoCompras.CarrinhoCompras;
-import com.sisst.barbearia.domain.carrinhoCompras.CarrinhoRepository;
-import com.sisst.barbearia.domain.carrinhoCompras.ExibeCarrinho;
+import com.sisst.barbearia.domain.carrinhoCompras.*;
 import com.sisst.barbearia.domain.cliente.service.ClienteService;
+import com.sisst.barbearia.domain.itemProduto.ItensCarrinho;
 import com.sisst.barbearia.domain.produto.service.BuscaProduto;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -43,6 +39,8 @@ public class AgendamentoController {
     AgendamentoRepository agendamentoRepository;
     @Autowired
     List<ValidadorAgendamento> validador;
+    @Autowired
+    BuscaCarrinho buscaCarrinho;
 
     @PostMapping
     public ResponseEntity agendarCorte(@RequestBody @Valid DadosAgendamento dados){
@@ -58,12 +56,10 @@ public class AgendamentoController {
     }
     @GetMapping
     public String carregaAgendamento(Model model){
-        var inicioDia = LocalDate.now().atStartOfDay();
-        var fimDia = LocalDate.now().atTime(LocalTime.MAX);
-        List<ExibeCarrinho> carrinho = carrinhoRepository.buscarResumoCarrinhos(inicioDia,fimDia);
+        List<CarrinhoFull> carrinho = buscaCarrinho.buscaCarriho();
+        carrinho.forEach(System.out::println);
         model.addAttribute("carrinho", carrinho);
         return "agendamentos";
-
     }
 }
 
